@@ -203,7 +203,12 @@ def update_item(request, item_id):
         if request.method == "POST":
             form = ItemForm(request.POST, instance=item)
             if form.is_valid():
-                form.save()
+                item.thumbnail = request.FILES.get('thumbnail', "images/thumbnails/no_image.png")
+                item.comment = request.POST['comment']
+                item.item_name = request.POST['item_name']
+                item.description = request.POST['description']
+                item.user = request.user
+                item.save()
                 return redirect(reverse("accounts:mypage-post-items", kwargs={"pk": request.user.id}))
         # 更新ページ訪問時、現在値を表示
         else:
