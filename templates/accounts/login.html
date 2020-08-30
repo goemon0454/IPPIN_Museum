@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block contents %}
+<header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">
+        <!-- Masthead Heading-->
+        <h1 class="masthead-heading mb-0">Log in</h1>
+        <!-- Icon Divider-->
+        <div class="divider-custom"></div>
+        <!-- Masthead Subheading-->
+        <p class="pre-wrap masthead-subheading font-weight-light mb-0">ログインしてIPPINを共有しよう。</p>
+    </div>
+</header>
+
+<!-- ログインフォーム-->
+<div class="row mt-5">
+    <div class="col-lg-8 mx-auto">
+        <form id="contactForm" name="sentMessage" method="POST">
+            {% csrf_token %}
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 py-2">
+                    <!-- <label>Label</label> -->
+                    <p>アカウント名</p>
+                    {{ form.username }}
+                    <p class="help-block text-danger">{{ form.username.errors.0 }}</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 py-2">
+                    <!-- <label>Label</label> -->
+                    <p>パスワード</p>
+                    {{ form.password }}
+                    <p class="help-block text-danger">{{ form.password.errors.0 }}</p>
+                </div>
+            </div>
+            <br />
+            <div id="success"></div>
+            <div class="form-group"><button class="btn btn-primary btn-xl" id="sendMessageButton" type="submit">ログイン！</button></div>
+        </form>
+    </div>
+</div>
+{% endblock contents %}

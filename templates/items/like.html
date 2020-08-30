@@ -1,0 +1,12 @@
+{% if request.user.is_authenticated %}
+    <form action="{% url 'items:like' %}" method="POST">
+        {% csrf_token %}
+        {% if item.id in like_items %}
+            <button type="submit" id="like" name="item_id" value="{{item.id}}" class="btn btn-danger btn-lg"><i class="fas fa-lg fa-heart"></i> {{ item.like_users.count }}</button>
+        {% else %}
+            <button type="submit" id="like" name="item_id" value="{{item.id}}" class="btn btn-outline-danger btn-lg"><i class="far fa-lg fa-heart"></i> {{ item.like_users.count }}</button>
+        {% endif %}
+    </form>
+{% else %}
+    <button class="btn btn-outline-danger btn-lg" onclick="location.href='{% url "accounts:login" %}'"><i class="far fa-lg fa-heart"></i>{{ item.like_users.count }}</button>
+{% endif %}

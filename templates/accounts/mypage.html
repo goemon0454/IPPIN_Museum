@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contents %}
+
+<header class="masthead bg-primary text-white text-center pb-0">
+    <div class="container d-flex align-items-center flex-column">
+        <!-- Masthead Heading-->
+        <h1 class="masthead-heading mb-0"><a class="text-white" href="{% url 'accounts:mypage' account_detail.id %}">{{ account_detail.username }}</a></h1>
+        <!-- Icon Divider-->
+        <div class="divider-custom"></div>
+        <!-- Masthead Subheading-->
+        <p class="pre-wrap masthead-subheading font-weight-light mb-0">マイページ</p>
+    </div>
+</header>
+<section class="page-section bg-primary text-white mb-0" id="about">
+    <div class="container">
+        <!-- About Section Heading-->
+        <div class="text-center">
+            <h2 class="page-section-heading d-inline-block text-white">IPPINリスト</h2>
+        </div>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light"></div>
+        <!-- About Section Content-->
+        <div class="row">
+            <div class="col-lg-4 ml-auto my-1">
+                <button class="btn btn-light btn-block font-weight-bolder btn-lg text-primary" onclick='location.href="{% url 'accounts:mypage-post-items' account_detail.id %}"'>投稿したIPPIN</button>
+            </div>
+            <div class="col-lg-4 mr-auto my-1">
+                <button class="btn btn-light btn-block font-weight-bolder btn-lg text-primary" onclick='location.href="{% url 'accounts:mypage-like-items' account_detail.id %}"'>いいねしたIPPIN</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock contents %}
