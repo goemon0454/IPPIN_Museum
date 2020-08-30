@@ -13,10 +13,9 @@ import os
 from pathlib import Path
 import dj_database_url
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -24,8 +23,6 @@ except ImportError:
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
@@ -86,7 +83,7 @@ DATABASES = {
         'NAME': 'name',
         'USER': 'user',
         'PASSWORD': '',
-        'HOST': 'HOST',
+        'HOST': 'localhost',
         'PORT': '',
     }
 }
@@ -125,6 +122,11 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
 if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']

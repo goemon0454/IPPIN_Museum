@@ -4,7 +4,7 @@ from . import views
 app_name = "items"
 
 urlpatterns = [
-    path("new-items/", views.NewItemListView.as_view(), name="new-items-list"),
+    path("", views.NewItemListView.as_view(), name="new-items-list"),
     path("popular-items/", views.PopularItemListView.as_view(), name="popular-items-list"),
     path("random-items/", views.RandomItemListView.as_view(), name="random-items-list"),
     path("search-new-items/", views.SearchNew.as_view(), name="search-new-items-list"),
