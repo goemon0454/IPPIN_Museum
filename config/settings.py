@@ -143,7 +143,7 @@ DATABASES['default'].update(db_from_env)
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -154,4 +154,4 @@ IMAGE_URL = "/images/"
 AUTH_USER_MODEL = "accounts.User"
 
 LOGIN_URL = "/login/"
-LOGIN_REDIRECT_URL = "/new-items/"
+LOGIN_REDIRECT_URL = "/"
