@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
-
+from django.utils.timezone import make_aware
+import datetime
 from accounts.models import User
 
 
@@ -11,8 +12,9 @@ class Item(models.Model):
     description = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
+    update_at = models.DateTimeField(default=make_aware(datetime.datetime.now()))
     like_users = models.ManyToManyField(User, related_name='like_items', blank=True)
+    likes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.item_name

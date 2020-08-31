@@ -3,6 +3,8 @@ from functools import reduce
 from django.db.models import Q
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.utils.timezone import make_aware
+import datetime
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView, TemplateView
 from django.shortcuts import render, redirect, get_object_or_404
@@ -19,9 +21,15 @@ def like(request):
     if request.user.like_items.filter(id=item.id).exists():
         request.user.like_items.remove(item)
         item.like_users.remove(request.user)
+        item.likes-=1
+        print(item.create_at)
+        print(item.update_at)
+        item.save()
     else:    
         request.user.like_items.add(item)
         item.like_users.add(request.user)
+        item.likes+=1
+        item.save()
     # 現在のページにリダイレクト
     return redirect(request.META['HTTP_REFERER'])
 
@@ -74,7 +82,6 @@ class SearchNew(ListView):
     
     def parse_search_params(self, words: str):
         search_words = words.replace(' ', ' ').split()
-        print("search_words=", search_words)
         return search_words
 
 # いいね順ソート
@@ -85,7 +92,7 @@ class PopularItemListView(ListView):
     paginate_by = 24
     
     def get_queryset(self):
-        return Item.objects.order_by('like_users', 'update_at').reverse()[:240]
+        return Item.objects.order_by('likes', 'update_at').reverse()[:240]
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -110,9 +117,9 @@ class SearchPopular(ListView):
             if self.request.GET.get('q', ''):
                 params = self.parse_search_params(self.request.GET['q'])
                 query = reduce(and_, [Q(item_name__icontains=p) | Q(comment__icontains=p) | Q(description__icontains=p) for p in params])
-                return Item.objects.filter(query).order_by('like_users', 'update_at').reverse()[:240]
+                return Item.objects.filter(query).order_by('likes', 'update_at').reverse()[:240]
         else:
-            return Item.objects.order_by('like_users', 'update_at').reverse()[:240]
+            return Item.objects.order_by('likes', 'update_at').reverse()[:240]
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -124,7 +131,6 @@ class SearchPopular(ListView):
     
     def parse_search_params(self, words: str):
         search_words = words.replace(' ', ' ').split()
-        print("search_words=", search_words)
         return search_words
 
 # ランダム表示（ページネーションは無し）
@@ -172,7 +178,6 @@ class SearchRandom(ListView):
     
     def parse_search_params(self, words: str):
         search_words = words.replace(' ', ' ').split()
-        print("search_words=", search_words)
         return search_words
 
 # 新規投稿アップロード処理
@@ -186,6 +191,7 @@ def post_item(request):
                 item.comment = request.POST['comment']
                 item.item_name = request.POST['item_name']
                 item.description = request.POST['description']
+                item.update_at = make_aware(datetime.datetime.now())
                 item.user = request.user
                 item.save()
                 return redirect('items:new-items-list')
@@ -201,12 +207,13 @@ def update_item(request, item_id):
     if request.user.is_authenticated and request.user == item.user:
         # 更新完了、マイページへ飛ばす
         if request.method == "POST":
-            form = ItemForm(request.POST, instance=item)
+            form = ItemForm(request.POST, request.FILES, instance=item)
             if form.is_valid():
-                item.thumbnail = request.FILES.get('thumbnail', "images/thumbnails/no_image.png")
+                item.thumbnail = request.FILES.get('thumbnail', item.thumbnail)
                 item.comment = request.POST['comment']
                 item.item_name = request.POST['item_name']
                 item.description = request.POST['description']
+                item.update_at = make_aware(datetime.datetime.now())
                 item.user = request.user
                 item.save()
                 return redirect(reverse("accounts:mypage-post-items", kwargs={"pk": request.user.id}))
