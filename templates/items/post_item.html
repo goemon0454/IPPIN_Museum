@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load widget_tweaks %}
 
 {% block contents %}
     <header class="masthead bg-primary text-white text-center">
@@ -26,8 +26,7 @@
                         {% if forloop.first %}
                             <p class="mb-2 mt-3">商品画像</p>
                         {% endif %}
-                        {{ field }}
-                        {{ field.errors }}
+                        {% render_field field required="required" %}
                         <p class="help-block text-danger"></p>
                     </div>
                 </div>

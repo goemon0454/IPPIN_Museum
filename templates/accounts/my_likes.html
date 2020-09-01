@@ -62,8 +62,8 @@
                                                 <p class="mb-2 text-left font-weight-bolder text-secondary">{{ item.description }}</p>
                                                 <div class="text-right mb-2 mr-2">{% include 'items/like.html' %}</div>   
                                                 <div class="row justify-content-center mb-2"><input type="text" value="{{ item.item_name }}"><button class="btn-example2 btn btn-primary btn-sm"><i class="far fa-file-alt"></i></button></div>
-                                                <button class="btn btn-danger btn-block font-weight-bolder" onclick="location.href='https://www.amazon.co.jp/'">Amazon</button>
-                                                <button class="btn btn-danger btn-block my-1 font-weight-bolder" onclick='location.href="https://www.rakuten.co.jp/"'>楽天市場</button>
+                                                <a class="btn btn-danger btn-block font-weight-bolder" href='https://www.amazon.co.jp/'>Amazon</a>
+                                                <a class="btn btn-danger btn-block font-weight-bolder mb-1" href='https://www.rakuten.co.jp/'>楽天市場</a>
                                                 {% if request.user.is_authenticated and request.user == item.user %}
                                                     <div class="mb-1">
                                                         <button class="btn btn-primary font-weight-bolder" onclick="location.href='{% url "items:update-item" item.id %}'"><i class="fas fa-pen"></i>  内容変更</button>
