@@ -5,10 +5,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
-.like-red {
-  color: #dc3545;
-}
-
 :root {
   --blue: #007bff;
   --indigo: #6610f2;

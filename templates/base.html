@@ -132,29 +132,27 @@
             $(document).ready(function(event){
                 var canAjax = true;
                 $(document).on('click', '.like', function(event){
-                    if(!canAjax){
-                        console.log("connecting...");
-                        return;
-                    }
-                    canAjax = false;
                     event.preventDefault();
-                    var item_id = $(this).attr('value');
-                    var item_like_id = $(this).parent().attr('id');
-                    $.ajax({
-                        type: 'POST',
-                        url: '{% url "items:like" %}',
-                        data: {'item_id': item_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                        dataType: 'json',
-                        success: function(response){
-                            $(`#${item_like_id}`).html(response['form'])
-                            console.log($(`#${item_like_id}`).html(response['form']));
-                            canAjax = true;
-                        },
-                        error: function(rs, e){
-                            console.log(rs.responseText);
-                            canAjax = true;
-                        },
-                    });
+                    if(canAjax){
+                        canAjax = false;
+                        var item_id = $(this).attr('value');
+                        var item_like_id = $(this).parent().attr('id');
+                        $.ajax({
+                            type: 'POST',
+                            url: '{% url "items:like" %}',
+                            data: {'item_id': item_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                            dataType: 'json',
+                            success: function(response){
+                                $(`#${item_like_id}`).html(response['form'])
+                                console.log($(`#${item_like_id}`).html(response['form']));
+                                canAjax = true;
+                            },
+                            error: function(rs, e){
+                                console.log(rs.responseText);
+                                canAjax = true;
+                            },
+                        });
+                    }
                 });
             });
         </script>
