@@ -7,7 +7,7 @@ class ItemForm(forms.ModelForm):
         model = Item
         fields = ("thumbnail", "item_name", "comment", "description")
         widgets = {
-            "thumbnail": forms.ClearableFileInput(attrs={"formnovalidate" "class":"form-control", "id":"name", "placeholder":"商品画像", "data-validation-required-message":"Please enter your image."}),
+            "thumbnail": forms.ClearableFileInput(attrs={"formnovalidate":"formnovalidate", "class":"form-control", "id":"name", "placeholder":"商品画像", "data-validation-required-message":"Please enter your image."}),
             "item_name": forms.TextInput(attrs={"class":"form-control", "id":"name", "type":"text", "placeholder":"商品名(50文字)", "required":"required", "data-validation-required-message":"Please enter your name."}),
             "comment": forms.TextInput(attrs={"class":"form-control", "id":"name", "type":"text", "placeholder":"ひとこと紹介(50文字)", "required":"required", "data-validation-required-message":"Please enter your name."}),
             "description": forms.Textarea(attrs={"class":"form-control", "id":"message", "rows":"3", "placeholder":"詳しい商品説明", "required":"required", "data-validation-required-message":"Please enter your name."}),

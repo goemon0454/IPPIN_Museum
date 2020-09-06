@@ -8,6 +8,9 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView, TemplateView
 from django.shortcuts import render, redirect, get_object_or_404
+# いいねajax
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 from .forms import ItemForm
 from .models import Item
@@ -22,16 +25,21 @@ def like(request):
         request.user.like_items.remove(item)
         item.like_users.remove(request.user)
         item.likes-=1
-        print(item.create_at)
-        print(item.update_at)
         item.save()
     else:    
         request.user.like_items.add(item)
         item.like_users.add(request.user)
         item.likes+=1
         item.save()
+    
+    user_id = request.user.id
+    like_items = User.objects.filter(id=user_id).values_list("like_items", flat=True)
+    context = {"item": item, "like_items": like_items}
+    if request.is_ajax():
+       html = render_to_string('items/like.html', context, request=request )
+       return JsonResponse({'form': html})
     # 現在のページにリダイレクト
-    return redirect(request.META['HTTP_REFERER'])
+    # return redirect(request.META['HTTP_REFERER'])
 
 # 新着ソート
 class NewItemListView(ListView):

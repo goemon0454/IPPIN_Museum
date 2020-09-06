@@ -91,7 +91,7 @@ class MypageLikeItem(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_id = self.kwargs.get('pk')
-        my_like_items = User.objects.get(id=user_id).like_items.all()
+        my_like_items = User.objects.get(id=user_id).like_items.all().order_by('update_at').reverse()
         # ページネーション
         page_num = self.request.GET.get('p')
         pagenator = Paginator(my_like_items,24)

@@ -2,9 +2,13 @@
     <form action="{% url 'items:like' %}" method="POST">
         {% csrf_token %}
         {% if item.id in like_items %}
-            <button type="submit" id="like" name="item_id" value="{{item.id}}" class="btn btn-danger btn-lg"><i class="fas fa-lg fa-heart"></i> {{ item.likes }}</button>
+            <div id="like{{item.id}}">
+                <button type="submit" name="item_id" value="{{item.id}}" class="btn btn-danger btn-lg like"><i class="fas fa-lg fa-heart"></i> {{ item.likes }}</button>
+            </div>
         {% else %}
-            <button type="submit" id="like" name="item_id" value="{{item.id}}" class="btn btn-outline-danger btn-lg"><i class="far fa-lg fa-heart"></i> {{ item.likes }}</button>
+            <div id="like{{item.id}}">
+                <button type="submit" name="item_id" value="{{item.id}}" class="btn btn-outline-danger btn-lg like"><i class="far fa-lg fa-heart"></i> {{ item.likes }}</button>
+            </div>
         {% endif %}
     </form>
 {% else %}
