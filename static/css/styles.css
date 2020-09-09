@@ -2074,8 +2074,8 @@ fieldset:disabled a.btn {
   color: #dc3545;
   border-color: #dc3545; }
   .btn-outline-danger:hover {
-    color: #fff;
-    background-color: #dc3545;
+    color: #dc3545;
+    background-color: #fce9e9;
     border-color: #dc3545; }
   .btn-outline-danger:focus, .btn-outline-danger.focus {
     box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5); }
@@ -7336,8 +7336,7 @@ h3 {
   position: relative;
   display: block;
   max-width: 25rem;
-  border-radius: 0.5rem;
-  overflow: hidden; }
+  border-radius: 0.5rem; }
   .portfolio .portfolio-item .portfolio-item-caption {
     position: absolute;
     top: 0;
