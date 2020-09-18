@@ -30,3 +30,5 @@ urlpatterns = [
 
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.IMAGE_URL, document_root=settings.IMAGE_ROOT)
+if not settings.DEBUG:
+    urlpatterns += static(settings.CERT_URL, document_root=settings.CERT_ROOT)

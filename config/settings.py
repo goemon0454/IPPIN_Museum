@@ -163,6 +163,14 @@ if not DEBUG:
 
     import django_heroku
     django_heroku.settings(locals())
+    
+    # SSL
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    CERT_ROOT = os.path.join(BASE_DIR, '.well-known')
+    CERT_URL = '/.well-known/'
 
 db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
 DATABASES['default'].update(db_from_env)
